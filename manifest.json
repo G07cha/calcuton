@@ -4,6 +4,7 @@
   "description": "Browser extension that calculates on fly",
   "version": "0.1",
   "author": "g07cha",
+  "homepage_url": "https://github.com/g07cha/calcuton",
 
   "content_scripts": [
     {
