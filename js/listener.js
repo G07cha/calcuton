@@ -36,26 +36,6 @@ function findClosest(string, regexp, position) {
   return lastMatch;
 }
 
-/**
- * Matches regex occurrences in string
- * @param  {[type]} string [description]
- * @return {[type]}        [description]
- */
-function findOccurrences(string, regexp) {
-  var occurrences = {};
-  var match;
-
-  while ((match = regexp.exec(string)) !== null) {
-    if (match.index === regexp.lastIndex) {
-      regexp.lastIndex++;
-    }
-
-    occurrences[match.index] = match[0];
-  }
-
-  return occurrences;
-}
-
 function isNumberOrOperator(char) {
   return /[0-9]|-|\+|\(|\)|\*|\^|\//.test(char);
 }
