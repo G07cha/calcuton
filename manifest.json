@@ -8,9 +8,16 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["lib/listener.js"]
+      "js": ["lib/listener.js"],
+      "css": ["styles/hint.css"]
     }
   ],
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
 
   "permissions": [
     "activeTab"
