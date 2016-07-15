@@ -37,7 +37,7 @@ function findClosest(string, regexp, position) {
 }
 
 function isNumberOrOperator(char) {
-  return /[0-9]|-|\+|\(|\)|\*|\^|\//.test(char);
+  return '0123456789-+*/.'.indexOf(char) > -1;
 }
 
 function isReadyToReplace(string) {
