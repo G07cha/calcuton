@@ -1,6 +1,6 @@
 var buffer = '';
 var lastItem;
-var mathRegexp = /([0-9]|[%-^]){3,}/g;
+var mathRegexp = /([0-9]|\*|\/|\+|-|\.){3,}/g;
 
 /**
  * Check if provided HTML element is valid input element
