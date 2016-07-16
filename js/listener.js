@@ -1,6 +1,6 @@
 var buffer = '';
 var lastItem;
-var mathRegexp = /([0-9]|\*|\/|\+|-|\.){3,}/g;
+var mathRegexp = /([0-9]|\*|\/|\+|-|\.|\(|\)){3,}/g;
 
 /**
  * Check if provided HTML element is valid input element
@@ -22,7 +22,6 @@ function isInputElement(element) {
   return false;
 }
 
-
 function findClosest(string, regexp, position) {
   var match, lastMatch;
 
@@ -37,7 +36,7 @@ function findClosest(string, regexp, position) {
 }
 
 function isNumberOrOperator(char) {
-  return '0123456789-+*/.'.indexOf(char) > -1;
+  return '0123456789-+*/.()'.indexOf(char) > -1;
 }
 
 function isReadyToReplace(string) {
@@ -66,7 +65,9 @@ function checkEvent(event) {
           lastItem.target = target;
           lastItem.result = result;
 
-          target.value = value.substring(0, closestItem.index).concat(result).concat(value.substring(closestItem.index + closestItem[0].length + 1));
+          target.value = value.substring(0, closestItem.index)
+            .concat(result)
+            .concat(value.substring(closestItem.index + closestItem[0].length + 1));
         } catch(err) { }
       }
     } else if(event.code === 'Escape' && lastItem.length) { // Last action was canceled
@@ -101,3 +102,8 @@ chrome.storage.onChanged.addListener(function(changes) {
     document.addEventListener('keyup', checkEvent);
   }
 });
+
+module = module || {};
+module.exports = {
+  findClosest: findClosest
+};
