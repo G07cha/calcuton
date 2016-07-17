@@ -3,6 +3,19 @@ var lastItem;
 var mathRegexp = /([0-9]|\*|\/|\+|-|\.|\(|\)){3,}/g;
 
 /**
+ * Replaces with provided value in specified range of indexes and returns new string
+ * @param  {Number} start       Replacement start index
+ * @param  {Number} end         Replacement end index
+ * @param  {String} replacement
+ * @return {String}             New string with replacement
+ */
+String.prototype.replaceRange = function(start, end, replacement) {
+  return this.substring(0, start)
+    .concat(replacement)
+    .concat(this.substring(end));
+};
+
+/**
  * Check if provided HTML element is valid input element
  * @param  {HTML element}  element
  * @return {Boolean}
@@ -65,16 +78,15 @@ function checkEvent(event) {
           lastItem.target = target;
           lastItem.result = result;
 
-          target.value = value.substring(0, closestItem.index)
-            .concat(result)
-            .concat(value.substring(closestItem.index + closestItem[0].length + 1));
+          target.value = value.replaceRange(closestItem.index,
+            closestItem.index + closestItem[0].length + 1,
+            result);
         } catch(err) { }
       }
     } else if(event.code === 'Escape' && lastItem.length) { // Last action was canceled
-      lastItem.target.value = lastItem.target.value
-        .substring(0, lastItem.index)
-        .concat(lastItem[0])
-        .concat(lastItem.target.value.substring(lastItem.index + lastItem.result.toString().length + 1));
+      lastItem.target.value = lastItem.target.value.replaceRange(lastItem.index,
+        lastItem.index + lastItem.result.toString().length + 1,
+        lastItem[0]);
 
       // Set focus back to the field because Esc reset focus to body page
       lastItem.target.focus();
@@ -103,7 +115,7 @@ chrome.storage.onChanged.addListener(function(changes) {
   }
 });
 
-module = module || {};
+var module = module || {};
 module.exports = {
   findClosest: findClosest
 };
