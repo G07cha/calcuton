@@ -1,0 +1,23 @@
+{
+  "name": "calcuton",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/G07cha/calcuton.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/G07cha/calcuton/issues"
+  },
+  "homepage": "https://github.com/G07cha/calcuton#readme",
+  "devDependencies": {
+    "mocha": "^2.5.3"
+  }
+}
