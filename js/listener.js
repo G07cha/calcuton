@@ -1,5 +1,7 @@
+/* jslint evil: true */
+
 var lastItem;
-var mathRegexp = /([0-9]|\*|\/|\+|-|\.|\(|\)){3,}/g;
+var mathRegexp = /^([0-9]|\*|\/|\+|-|\.|\(|\)){3,}$/;
 
 /**
  * Replaces with provided value in specified range of indexes and returns new string
@@ -34,17 +36,18 @@ function isInputElement(element) {
   return false;
 }
 
-function findClosest(string, regexp, position) {
-  var match, lastMatch;
+function getNearestExpression(string, position) {
+  var expressionStart = string.lastIndexOf(' ', position - 2) + 1;
+  var expression = string.substring(expressionStart, position - 1);
 
-  while ((match = regexp.exec(string)) !== null && match.index < position) {
-    if (match.index === regexp.lastIndex) {
-      regexp.lastIndex++;
-    }
-    lastMatch = match;
+  if(mathRegexp.test(expression)) {
+    return {
+      value: expression,
+      index: expressionStart
+    };
+  } else {
+    return '';
   }
-
-  return lastMatch;
 }
 
 /**
@@ -70,25 +73,25 @@ function checkEvent(event) {
 
   if(event.code === 'Space' && isReadyToReplace(target)) {
     var value = target.value + event.key;
-    var closestItem = findClosest(value, mathRegexp, target.selectionStart);
+    var closestItem = getNearestExpression(value, target.selectionStart);
 
     if(closestItem) {
       try {
-        var result = eval(closestItem[0]);
+        var result = eval(closestItem.value);
 
         lastItem = closestItem;
         lastItem.target = target;
         lastItem.result = result;
 
         target.value = value.replaceRange(closestItem.index,
-          closestItem.index + closestItem[0].length + 1,
+          closestItem.index + closestItem.value.length + 1,
           result);
       } catch(err) { }
     }
-  } else if(event.code === 'Escape' && lastItem.length) { // Last action was canceled
+  } else if(event.code === 'Escape' && lastItem) { // Last action was canceled
     lastItem.target.value = lastItem.target.value.replaceRange(lastItem.index,
       lastItem.index + lastItem.result.toString().length + 1,
-      lastItem[0]);
+      lastItem.value);
 
     // Set focus back to the field because Esc reset focus to body page
     lastItem.target.focus();
@@ -116,5 +119,4 @@ chrome.storage.onChanged.addListener(function(changes) {
 
 var module = module || {};
 module.exports = {
-  findClosest: findClosest
 };
