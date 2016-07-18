@@ -1,7 +1,6 @@
 /* jslint evil: true */
 
 var lastItem;
-var mathRegexp = /^([0-9]|\*|\/|\+|-|\.|\(|\)){3,}$/;
 
 /**
  * Replaces with provided value in specified range of indexes and returns new string
@@ -36,7 +35,16 @@ function isInputElement(element) {
   return false;
 }
 
+/**
+ * Find math expression right next to position in string
+ * @param  {String} string
+ * @param  {Number} position
+ * @return {Object}           If expression valid will return object with `value`
+ * and `index` properties where value is expression itself and `index` is start
+ * position of expression elsewise will return `null`
+ */
 function getNearestExpression(string, position) {
+  var mathRegexp = /^([0-9]|\*|\/|\+|-|\.|\(|\)){3,}$/;
   var expressionStart = string.lastIndexOf(' ', position - 2) + 1;
   var expression = string.substring(expressionStart, position - 1);
 
@@ -46,7 +54,7 @@ function getNearestExpression(string, position) {
       index: expressionStart
     };
   } else {
-    return '';
+    return null;
   }
 }
 
@@ -103,4 +111,6 @@ function checkEvent(event) {
 
 var module = module || {};
 module.exports = {
+  getNearestExpression: getNearestExpression,
+  isReadyToReplace: isReadyToReplace
 };
