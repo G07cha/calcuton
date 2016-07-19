@@ -1,8 +1,7 @@
 {
   "name": "calcuton",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.0.1",
+  "description": "Calculates expressions as you type",
   "scripts": {
     "test": "mocha"
   },
@@ -10,9 +9,9 @@
     "type": "git",
     "url": "git+https://github.com/G07cha/calcuton.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["calculator"],
+  "author": "G07cha",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/G07cha/calcuton/issues"
   },
