@@ -8,7 +8,7 @@ function initialize() {
     hostname = /:\/\/([^\/]+)/i.exec(tab.url)[1];
 
     // Check if current url exists in `disabled_sites` list
-    chrome.storage.sync.get('disabled_sites', function(data) {
+    storage.sync.get('disabled_sites', function(data) {
       sites = data.disabled_sites || sites;
 
       if(sites.indexOf(hostname) === -1) {
@@ -25,7 +25,7 @@ function initialize() {
       sites.splice(sites.indexOf(hostname), 1);
     }
 
-    chrome.storage.sync.set({
+    storage.sync.set({
       disabled_sites: sites
     }, function() {
       console.log('Saved');

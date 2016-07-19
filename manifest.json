@@ -9,7 +9,7 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["js/listener.js", "js/web-bindings.js"]
+      "js": ["js/listener.js", "js/storage-polyfill.js", "js/web-bindings.js"]
     }
   ],
 
@@ -27,5 +27,11 @@
   "permissions": [
     "activeTab",
     "storage"
-  ]
+  ],
+  "applications": {
+       "gecko": {
+           "id": "drumpfinator-firefox@donaldjdrumpf.com"
+       }
+   }
+
 }
